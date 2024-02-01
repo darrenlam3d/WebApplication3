@@ -1,0 +1,126 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<style>
+    /* Global styles */
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f8f9fa;
+        color: #495057;
+    }
+
+    h1, h2 {
+        color: #007bff;
+    }
+
+    a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+    /* Custom styling */
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .user-details {
+        margin-top: 20px;
+        border: 1px solid #007bff;
+        padding: 15px;
+        border-radius: 5px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .user-photo {
+        max-width: 200px;
+        border-radius: 50%;
+        margin-top: 10px;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .toggle-button {
+        background-color: #007bff;
+        color: #fff;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+        .toggle-button:hover {
+            background-color: #0056b3;
+        }
+</style>
+
+<script>
+    // Function to toggle the visibility of the credit card information
+    function toggleCreditCard() {
+        var creditCardElement = document.getElementById('creditCard');
+        creditCardElement.classList.toggle('hidden');
+    }
+</script>
+
+<div class="container">
+    <h1>Welcome to the Home Page</h1>
+
+    @if (Model.CurrentUser == null)
+    {
+        <!-- Display welcome message for users who are not logged in -->
+        <div class="text-center">
+            <h1 class="display-4">Welcome</h1>
+            <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+        </div>
+    }
+    else
+    {
+        <!-- Display user details for logged-in users -->
+        <div class="user-details">
+            <h2>User Details</h2>
+            <dl>
+                <dt>ID</dt>
+                <dd>@Model.AuthToken</dd>
+
+                <dt>Full Name:</dt>
+                <dd>@Model.CurrentUser.FullName</dd>
+
+                <dt>Email:</dt>
+                <dd>@Model.CurrentUser.Email</dd>
+
+                <dt>Gender:</dt>
+                <dd>@Model.CurrentUser.Gender</dd>
+
+                <dt>Mobile Number:</dt>
+                <dd>@Model.CurrentUser.MobileNo</dd>
+
+                <dt>Credit Card:</dt>
+                <dd id="creditCard">@Model.DecryptedCreditCard</dd>
+                <button type="button" class="toggle-button" onclick="toggleCreditCard()">Toggle Credit Card</button>
+
+                <dt>Delivery Address:</dt>
+                <dd>@Model.CurrentUser.DeliveryAddress</dd>
+
+                <dt>About Me:</dt>
+                <dd>@Model.CurrentUser.AboutMe</dd>
+
+                <dt>Photo:</dt>
+                <img src="~/uploads/@Model.CurrentUser.Photo" alt="User Photo" class="user-photo" />
+            </dl>
+        </div>
+    }
+
+</div>

@@ -1,0 +1,121 @@
+﻿@page
+@model WebApplication3.Pages.RegisterModel
+@{
+}
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center align-items-center">
+
+        <div class="col-sm-12 col-md-12 col-lg-8">
+            <h1 class="mb-3">Register</h1>
+
+            <form method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="mb-3">
+                    <label class="form-label" asp-for="RModel.FullName">Full Name</label>
+                    <input type="Text" asp-for="RModel.FullName" class="form-control" />
+                    <span asp-validaton-for="RModel.FullName" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" asp-for="RModel.CreditCard">Credit Card</label>
+                    <input type="Text" asp-for="RModel.CreditCard" class="form-control" />
+                    <span asp-validaton-for="RModel.CreditCard" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" asp-for="RModel.Gender">Gender</label>
+                    <select asp-for="RModel.Gender" class="form-control">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" asp-for="RModel.MobileNo">Mobile No</label>
+                    <input type="text" asp-for="RModel.MobileNo" class="form-control" />
+                    <span asp-validation-for="RModel.MobileNo" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" asp-for="RModel.DeliveryAddress">Delivery Address</label>
+                    <input type="text" asp-for="RModel.DeliveryAddress" class="form-control" />
+                    <span asp-validation-for="RModel.DeliveryAddress" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" asp-for="RModel.Email">Email Address</label>
+                    <input type="email" asp-for="RModel.Email" class="form-control" />
+                    <span asp-validation-for="RModel.Email" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" asp-for="RModel.Password">Password</label>
+                    <input type="password" asp-for="RModel.Password" class="form-control" id="Password" />
+                    <span asp-validation-for="RModel.Password" class="text-danger"></span>
+                </div>
+                <span id="password-strength-message"></span>
+
+                <div class="mb-3">
+                    <label class="form-label" asp-for="RModel.ConfirmPassword">Confirm Password</label>
+                    <input type="password" asp-for="RModel.ConfirmPassword" class="form-control" />
+                    <span asp-validation-for="RModel.ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" asp-for="RModel.Photo">Photo (.JPG only)</label>
+                    <input type="file" asp-for="RModel.Photo" accept=".jpg" class="form-control" />
+                    <span asp-validation-for="RModel.Photo" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" asp-for="RModel.AboutMe">About Me</label>
+                    <textarea asp-for="RModel.AboutMe" class="form-control"></textarea>
+                    <span asp-validation-for="RModel.AboutMe" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        document.getElementById('Password').addEventListener('input', function () {
+            checkPasswordStrength(this.value);
+        });
+
+        function checkPasswordStrength(password) {
+            var lengthCheck = /^(?=.{12,})/;
+            var uppercaseCheck = /^(?=.*[A-Z])/;
+            var lowercaseCheck = /^(?=.*[a-z])/;
+            var specialCharCheck = /^(?=.*[@@$!%#?&])/;
+            var numberCheck = /^(?=.*\d)/;
+
+            var strengthMessage = '';
+
+            if (!lengthCheck.test(password)) {
+                strengthMessage += 'Password must be at least 12 characters.\n';
+            }
+            if (!uppercaseCheck.test(password)) {
+                strengthMessage += 'Password must contain at least one uppercase letter.\n';
+            }
+            if (!lowercaseCheck.test(password)) {
+                strengthMessage += 'Password must contain at least one lowercase letter.\n';
+            }
+            if (!specialCharCheck.test(password)) {
+                strengthMessage += 'Password must contain at least one special character (@@$!%#?&).\n';
+            }
+            if (!numberCheck.test(password)) {
+                strengthMessage += 'Password must contain at least one number.\n';
+            }
+
+            document.getElementById('password-strength-message').innerText = strengthMessage;
+            document.getElementById('password-strength-message').style.color = 'red';
+        }
+    </script>
+}
